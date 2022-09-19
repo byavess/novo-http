@@ -8,19 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TesteComponent } from './teste/teste.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TesteComponent,
-    CadastroComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [TesteService],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, TesteComponent, CadastroComponent],
+
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

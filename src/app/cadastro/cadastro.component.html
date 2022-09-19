@@ -1,6 +1,13 @@
-
-<!-- <input type="text" placeholder="Enter com um id">
-<input type="text" placeholder="Enter com um curso"> -->
-
 <h1>Componente cadastro</h1>
+<input
+  (keyup.enter)="(salvarValor)"
+  (blur)="(salvarValor)"
+  placeholder="Entre com um id"
+/>
+<p>{{ id }}</p>
+<input type="text" placeholder="Entre com um curso" />
+<p>{{ nome }}</p>
 
+<button type="button" class="btn btn-primary" (click)="salvarValor()">
+  Primary
+</button>
