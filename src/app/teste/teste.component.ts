@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -24,11 +23,5 @@ export class TesteComponent implements OnInit {
       console.log(dados);
       this.cursos = dados;
     });
-  }
-
-  cadastro() {
-    this.testeService.lista();
-
-    console.log('lista de cadastro');
   }
 }
