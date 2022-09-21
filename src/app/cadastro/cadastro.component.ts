@@ -1,8 +1,10 @@
 import { Router } from '@angular/router';
-import { TesteService } from './../teste/teste.service';
+import { CursoService } from '../teste/curso.service';
 
 import { Curso } from './../teste/Curso';
 import { Component, OnInit } from '@angular/core';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cadastro',
@@ -15,17 +17,18 @@ export class CadastroComponent implements OnInit {
     nome: '',
   };
 
-  constructor(private testeService: TesteService, private router: Router) {}
+  constructor(private service: CursoService, private router: Router) {}
 
   ngOnInit(): void {}
 
   cadastro(): void {
-    this.testeService.create(this.curso).subscribe((resp) => {
+    this.service.create(this.curso).subscribe((resp) => {
       console.log('resposta', resp);
       if (resp.id != null) {
-        alert('Cadastrado Com Sucesso');
+        this.service.showMessage('Cadastrado Com Sucesso');
+
         //Todo fazer funcionar navigate
-        this.router.navigate(['/curso']);
+        this.router.navigate(['/cursos']);
       }
     });
     console.log(this.curso);
