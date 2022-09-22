@@ -48,6 +48,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatCardModule,
   ],
 
   providers: [],

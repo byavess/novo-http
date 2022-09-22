@@ -5,7 +5,7 @@ import { Curso } from './Curso';
 import { CursoService } from './curso.service';
 import { AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CursoDataSource } from './curso-datasource';
 
@@ -21,13 +21,12 @@ export class TesteComponent implements OnInit, AfterViewInit {
 
   dataSource!: CursoDataSource;
 
-  //  cursos: Curso[] = [];
   curso: Curso = {
     id: 0,
     nome: '',
   };
 
-  displayedColumns = ['id', 'nome'];
+  displayedColumns = ['id', 'nome', 'acao'];
 
   constructor(
     private service: CursoService,
@@ -37,15 +36,27 @@ export class TesteComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.dataSource = new CursoDataSource(this.service);
-    // this.service.lista().subscribe((dados: CursoDataSource[]) => {
-    //   console.log('dados', dados);
-    //   this.dataSource =  dados;
+    this.service.read().subscribe((curso) => {
+      this.curso = this.curso;
+    });
+
+    // const id = +this.route.snapshot.paramMap.get('id')!;
+    // this.service.readById(id).subscribe((curso) => {
+    //   this.curso = curso;
     // });
   }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
-  deleteCurso(): void {}
+
+  deleteCurso(objeto: any) {
+    console.log('delete', objeto);
+    this.service.delete(objeto.id).subscribe(() => {
+      this.service.showMessage('Produto excluido com sucesso');
+      this.router.navigate(['/']);
+    });
+  }
 }

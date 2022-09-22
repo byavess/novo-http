@@ -5,16 +5,12 @@ import { map, Observable, EMPTY, catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { Curso } from './Curso';
-import { CursoDataSource } from './curso-datasource';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CursoService {
-  readById(id: number) {
-    throw new Error('Method not implemented.');
-  }
-  private readonly API = `${environment.API}cursos `;
+  private readonly API = `${environment.API}cursos`;
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
@@ -23,7 +19,7 @@ export class CursoService {
   }
 
   create(curso: Curso): Observable<Curso> {
-    return this.http.post<Curso>(this.API, curso).pipe(
+    return this.http.post<Curso[]>(this.API, curso).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
@@ -33,10 +29,19 @@ export class CursoService {
     return this.http.get<Curso[]>(`${this.API}/${id}`);
   }
 
+  readById(id: number): Observable<Curso> {
+    const url = `${this.API}/${id}`;
+    return this.http.get<Curso[]>(url).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
   errorHandler(e: any): Observable<any> {
     this.showMessage('Ocorreu um erro!', true);
     return EMPTY;
   }
+
   showMessage(msg: string, isError: boolean = false): void {
     this.snackBar.open(msg, 'X', {
       duration: 3000,
@@ -47,8 +52,17 @@ export class CursoService {
   }
 
   delete(id: number): Observable<Curso> {
-    const API = `${this.API}/${id}`;
-    return this.http.delete<Curso>(API).pipe(
+    console.log('delete', id);
+
+    const url = `${this.API}/${id}`;
+    return this.http.delete<Curso[]>(url).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
+  read(): Observable<Curso[]> {
+    return this.http.get<Curso[]>(this.API).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
